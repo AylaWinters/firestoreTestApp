@@ -43,4 +43,16 @@ public class McTestyController {
         return response;
     }
 
+    @PutMapping(path = "/addCollection")
+    public ResponseEntity<Object> addCollection(@RequestParam String collectionName){
+        ResponseEntity<Object> response;
+        if (collectionName != null){
+            response = service.addCollection(collectionName);
+        } else {
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
+    }
+
 }

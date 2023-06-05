@@ -1,6 +1,7 @@
 package com.other.mcTesty.services;
 
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,5 +51,15 @@ public class McTestyService {
         }
         return new ResponseEntity<>("Success! " + jsonObject.getString("name")
                 + " was added!", HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> addCollection(String collectionName){
+        try {
+            db.collection(collectionName).add(new HashMap<>());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>("Success! " + collectionName + " was added!", HttpStatus.OK);
     }
 }
