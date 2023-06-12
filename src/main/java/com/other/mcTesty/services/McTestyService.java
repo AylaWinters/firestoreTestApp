@@ -14,6 +14,8 @@ import com.dep.layer.gcp.FireStoreConfig;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 @Service
 public class McTestyService {
 
@@ -26,13 +28,18 @@ public class McTestyService {
     public ResponseEntity<Object> addJsonObject(JSONObject jsonObject){
         Map<String, Object> data = new HashMap<>();
         try {
-            DocumentReference docRef = db.collection("products").document(jsonObject.getString("name"));
-            for (String key : jsonObject.keySet()) {
-                Object value = jsonObject.get(key);
-                data.put(key, value);
-            }
-            ApiFuture<WriteResult> result = docRef.set(data);
-            result.get();
+        	if(jsonObject.has("name") && jsonObject.getString("name") != null) {
+        		DocumentReference docRef = db.collection("products").document(jsonObject.getString("name"));
+        		for (String key : jsonObject.keySet()) {
+        			Object value = jsonObject.get(key);
+        			data.put(key, value);
+        		}
+        		ApiFuture<WriteResult> result = docRef.set(data);
+        		result.get();
+           	} else {
+           		return new ResponseEntity<>("Key: 'name' was not provided",
+           				HttpStatus.BAD_REQUEST);
+           	}
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -41,7 +48,7 @@ public class McTestyService {
                 + " was added!", HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> addCollection(String collectionName){
+	public ResponseEntity<Object> addCollection(String collectionName){
         try {
             db.collection(collectionName).add(new HashMap<>());
         } catch (Exception e){
