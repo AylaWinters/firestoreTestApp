@@ -1,6 +1,5 @@
 package com.other.mcTesty.controllers;
 
-import com.other.mcTesty.entities.Product;
 import com.other.mcTesty.services.McTestyService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +16,7 @@ public class McTestyController {
     @Autowired
     public McTestyController(McTestyService service){ this.service = service; }
 
-    @PutMapping(path = "/addProduct")
-    public ResponseEntity<Object> addProduct(@RequestBody Product product){
-        ResponseEntity<Object> response;
-
-        if (product != null){
-            response = service.addDocument(product);
-        } else {
-            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return response;
-    }
-
-    @PutMapping(path = "/addJson")
+    @PostMapping(path = "/addJson")
     public ResponseEntity<Object> addJsonObject(@RequestBody String json){
         ResponseEntity<Object> response;
         JSONObject jsonObject = new JSONObject(json);
@@ -43,7 +29,7 @@ public class McTestyController {
         return response;
     }
 
-    @PutMapping(path = "/addCollection")
+    @PostMapping(path = "/addCollection")
     public ResponseEntity<Object> addCollection(@RequestParam String collectionName){
         ResponseEntity<Object> response;
         if (collectionName != null){

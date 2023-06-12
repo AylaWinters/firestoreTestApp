@@ -8,18 +8,18 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
-@Configuration
+//@Configuration
 public class FireStoreConfig {
 
-    @Bean
-    public Firestore initializeFirestore() throws IOException {
-        FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
-                .setProjectId(System.getenv("PROJECT_ID"))
-                .setCredentials(GoogleCredentials.getApplicationDefault())
-                .build();
-        Firestore db = firestoreOptions.getService();
-        return db;
-    }
+//    @Bean
+//    public Firestore initializeFirestore() throws IOException {
+//        FirestoreOptions firestoreOptions = FirestoreOptions.getDefaultInstance().toBuilder()
+//                .setProjectId(System.getenv("PROJECT_ID"))
+//                .setCredentials(GoogleCredentials.getApplicationDefault())
+//                .build();
+//        Firestore db = firestoreOptions.getService();
+//        return db;
+//    }
 
 
 }
