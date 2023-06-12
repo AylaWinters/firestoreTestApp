@@ -26,7 +26,8 @@ public class McTestyController {
     }
 
     @PostMapping(path = "/addJson")
-    public ResponseEntity<Object> addJsonObject(@RequestBody String json){
+    public ResponseEntity<Object> addJsonObject(@RequestBody String json) 
+    		throws JsonProcessingException{
         ResponseEntity<Object> response;
         JSONObject jsonObject = new JSONObject(json);
         APILogEntity logEntity = new APILogEntity();
@@ -40,20 +41,17 @@ public class McTestyController {
 	            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	        }
         
-			logger.pushLogToBucket(logEntity, response, transStartTime);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+        logger.pushLogToBucket(logEntity, response, transStartTime);
         return response;
     }
 
     @PostMapping(path = "/addCollection")
-    public ResponseEntity<Object> addCollection(@RequestParam String collectionName){
+    public ResponseEntity<Object> addCollection(@RequestParam String collectionName) 
+    		throws JsonProcessingException{
         ResponseEntity<Object> response;
         APILogEntity logEntity = new APILogEntity();
         long transStartTime = System.currentTimeMillis();
@@ -65,15 +63,11 @@ public class McTestyController {
         } else {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        	logger.pushLogToBucket(logEntity, response, transStartTime);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+        logger.pushLogToBucket(logEntity, response, transStartTime);
         return response;
     }
 
