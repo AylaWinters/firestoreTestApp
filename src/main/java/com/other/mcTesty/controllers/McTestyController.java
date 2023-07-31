@@ -71,4 +71,21 @@ public class McTestyController {
         return response;
     }
 
+    @GetMapping(path = "/getDocument")
+    public ResponseEntity<Object> getDocument(@RequestParam String docName){
+        ResponseEntity<Object> response;
+        APILogEntity logEntity = new APILogEntity();
+        long transStartTime = System.currentTimeMillis();
+        logEntity.setTransactionId(RandomStringUtils.randomAlphanumeric(7));
+        logEntity.setEnv("DEV");
+        System.out.println(docName);
+        try {
+            response = service.getDocument(docName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
+
 }

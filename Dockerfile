@@ -9,4 +9,4 @@ WORKDIR /app
 #RUN mvn clean install -DskipTests
 ##COPY --from=main-build /app/target/mcTesty-0.0.1-SNAPSHOT.jar /app
 RUN mv /app/target/*.jar /app/app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-Djmoteava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]

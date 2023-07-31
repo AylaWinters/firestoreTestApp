@@ -1,9 +1,8 @@
 package com.other.mcTesty.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.dep.layer.gcp.FireStoreConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,8 +31,15 @@ public class McTestyService {
         	if(jsonObject.has("name") && jsonObject.getString("name") != null) {
         		DocumentReference docRef = db.collection("products").document(jsonObject.getString("name"));
         		for (String key : jsonObject.keySet()) {
-        			Object value = jsonObject.get(key);
-        			data.put(key, value);
+                    if(jsonObject.get(key).getClass() == JSONObject.class){
+                        System.out.println("is JSONObject");
+                        System.out.println(jsonObject.get(key).getClass());
+                        List list = new ArrayList<>();
+                        list.
+                    } else {
+                        Object value = jsonObject.get(key);
+        			    data.put(key, value);
+                    }
         		}
         		ApiFuture<WriteResult> result = docRef.set(data);
         		result.get();
@@ -55,5 +63,24 @@ public class McTestyService {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("Success! " + collectionName + " was added!", HttpStatus.OK);
+    }
+
+    public ResponseEntity<Object> getDocument(String docName){
+        ResponseEntity response;
+        try {
+
+            DocumentReference docRef = db.collection("products").document(docName);
+            DocumentSnapshot docObj = docRef.get().get();
+            if(docObj != null){
+                System.out.println(docObj.getData());
+            }
+            JSONObject json = new JSONObject(docObj.getData());
+            System.out.println("json = " + json);
+            response = new ResponseEntity(json, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
     }
 }
