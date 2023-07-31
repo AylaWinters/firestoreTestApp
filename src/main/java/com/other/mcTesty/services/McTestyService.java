@@ -4,12 +4,11 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
+
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.dep.layer.gcp.FireStoreConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +18,8 @@ import java.util.Map;
 public class McTestyService {
 
     private final Firestore db;
-
-    public McTestyService() { this.db = FireStoreConfig.getInstance(); }
-    
-   
+	
+    public McTestyService(Firestore db) { this.db = db; }
 
     public ResponseEntity<Object> addJsonObject(JSONObject jsonObject){
         Map<String, Object> data = new HashMap<>();
