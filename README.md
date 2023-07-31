@@ -57,8 +57,9 @@ public class FireStoreConfig {
 ```
 
 ### Map the incoming object to Firestore
+
 Firestore cannot accept raw JSON so we need to convert it to a DocumentReference.
-[Google Docs]("https://firebase.google.com/docs/firestore/query-data/get-data#java_1")
+[Google Docs](https://firebase.google.com/docs/firestore/query-data/get-data#java_1)
 
 ```java
     public ResponseEntity<Object> addJsonObject(JSONObject jsonObject){
