@@ -62,11 +62,11 @@ public class McTestyController {
         logEntity.setTransactionId(RandomStringUtils.randomAlphanumeric(7));
         logEntity.setEnv("DEV");
         try {
-        if (collectionName != null){
-            response = service.addCollection(collectionName);
-        } else {
-            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+            if (collectionName != null){
+                response = service.addCollection(collectionName);
+            } else {
+                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,11 +85,11 @@ public class McTestyController {
         logEntity.setTransactionId(RandomStringUtils.randomAlphanumeric(7));
         logEntity.setEnv("DEV");
         try {
-        if (documentName != null){
-            response = service.getDocument(documentName);
-        } else {
-            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+            if (documentName != null){
+                response = service.getDocument(documentName);
+            } else {
+                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
